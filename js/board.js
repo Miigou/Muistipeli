@@ -12,7 +12,15 @@ function shuffle(array) {
     array.sort(() => Math.random() - 0.5);
 }
 
+export function clearBoard() {
+    gameBoard.innerHTML = '';
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+}
+
 export function createBoard(cardCount) {
+    clearBoard();
     const selectedCards = allCards.slice(0, cardCount / 2);
     const cards = [...selectedCards, ...selectedCards];
     shuffle(cards);
