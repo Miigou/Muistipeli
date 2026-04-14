@@ -24,6 +24,8 @@ export function clearBoard() {
 
 export function createBoard(cardCount) {
     clearBoard();
+    const columns = Math.min(Math.ceil(Math.sqrt(cardCount)), 6);
+    gameBoard.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
     const selectedCards = allCards.slice(0, cardCount / 2);
     const cards = [...selectedCards, ...selectedCards];
     shuffle(cards);
