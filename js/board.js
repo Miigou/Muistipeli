@@ -7,6 +7,9 @@ const gameBoard = document.getElementById('game-board');
 let firstCard = null;
 let secondCard = null;
 let lockBoard = false;
+let matchedPairs = 0;
+let totalPairs = 0;
+let onGameWon = null;
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -20,10 +23,14 @@ export function clearBoard() {
     firstCard = null;
     secondCard = null;
     lockBoard = false;
+    matchedPairs = 0;
+    totalPairs = 0;
 }
 
-export function createBoard(cardCount) {
+export function createBoard(cardCount, onWin) {
     clearBoard();
+    totalPairs = cardCount / 2;
+    onGameWon = onWin || null;
     const columns = Math.min(Math.ceil(Math.sqrt(cardCount)), 6);
     gameBoard.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
     const selectedCards = allCards.slice(0, cardCount / 2);
@@ -33,6 +40,7 @@ export function createBoard(cardCount) {
         const cardElement = createCardElement(card);
         cardElement.addEventListener('click', () => {
             if (lockBoard) return;
+            if (cardElement.classList.contains('matched')) return;
             flipCard(cardElement, handleCardFlip);
         });
         gameBoard.appendChild(cardElement);
@@ -43,15 +51,13 @@ function handleCardFlip(cardElement) {
     if (lockBoard) return;
     if (cardElement === firstCard) return;
 
-    cardElement.classList.add('flipped');
-    cardElement.textContent = cardElement.dataset.card;
-
     if (!firstCard) {
         firstCard = cardElement;
         return;
     }
 
     secondCard = cardElement;
+    lockBoard = true;
     checkForMatch();
 }
 
@@ -61,9 +67,14 @@ function checkForMatch() {
 }
 
 function disableCards() {
-    firstCard.removeEventListener('click', flipCard);
-    secondCard.removeEventListener('click', flipCard);
+    firstCard.classList.add('matched');
+    secondCard.classList.add('matched');
+    matchedPairs++;
+    const won = matchedPairs === totalPairs;
     resetBoard();
+    if (won && onGameWon) {
+        onGameWon();
+    }
 }
 
 function unflipCards() {
