@@ -19,10 +19,16 @@ h1 {
 }
 
 #restart-btn {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     padding: 0.5rem 1rem;
     font-size: clamp(0.9rem, 2vw, 1rem);
     cursor: pointer;
+}
+
+#attempts-counter {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: bold;
+    margin: 0 0 1rem 0;
 }
 
 #game-board {
