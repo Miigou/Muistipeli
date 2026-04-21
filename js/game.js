@@ -1,14 +1,16 @@
 import { createBoard } from './board.js';
 
-let currentCardCount = 0;
 const winOverlay = document.getElementById('win-overlay');
+const winAttempts = document.getElementById('win-attempts');
 
-function showWinMessage() {
+function showWinMessage(attempts) {
+    winAttempts.textContent = `Löysit kaikki parit ${attempts} yrityksellä.`;
     winOverlay.classList.remove('hidden');
 }
 
 function hideWinMessage() {
     winOverlay.classList.add('hidden');
+    winAttempts.textContent = '';
 }
 
 function startGame() {
@@ -18,7 +20,6 @@ function startGame() {
         alert("Korttien määrän täytyy olla parillinen luku.");
         return;
     }
-    currentCardCount = cardCount;
     createBoard(cardCount, showWinMessage);
 }
 

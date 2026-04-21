@@ -13,6 +13,10 @@ let onGameWon = null;
 let attempts = 0;
 const attemptsDisplay = document.getElementById('attempts-counter');
 
+function updateAttemptsDisplay() {
+    attemptsDisplay.textContent = String(attempts);
+}
+
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -28,7 +32,7 @@ export function clearBoard() {
     matchedPairs = 0;
     totalPairs = 0;
     attempts = 0;
-    attemptsDisplay.textContent = 'Yritykset: 0';
+    updateAttemptsDisplay();
 }
 
 export function createBoard(cardCount, onWin) {
@@ -67,7 +71,7 @@ function handleCardFlip(cardElement) {
 
 function checkForMatch() {
     attempts++;
-    attemptsDisplay.textContent = `Yritykset: ${attempts}`;
+    updateAttemptsDisplay();
     let isMatch = firstCard.dataset.card === secondCard.dataset.card;
     isMatch ? disableCards() : unflipCards();
 }
@@ -79,8 +83,7 @@ function disableCards() {
     const won = matchedPairs === totalPairs;
     resetBoard();
     if (won && onGameWon) {
-        document.getElementById('win-attempts').textContent = `Yrityksiä yhteensä: ${attempts}`;
-        onGameWon();
+        onGameWon(attempts);
     }
 }
 

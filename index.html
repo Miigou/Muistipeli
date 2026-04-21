@@ -9,7 +9,10 @@
 <body>
     <h1>Muistipeli</h1>
     <button id="restart-btn">Aloita alusta</button>
-    <p id="attempts-counter">Yritykset: 0</p>
+    <div class="game-status" aria-live="polite">
+        <span class="status-label">Yritykset</span>
+        <span id="attempts-counter" class="status-value">0</span>
+    </div>
     <div id="game-board"></div>
     <div id="win-overlay" class="hidden">
         <div id="win-message">

@@ -25,10 +25,29 @@ h1 {
     cursor: pointer;
 }
 
-#attempts-counter {
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    font-weight: bold;
+.game-status {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
     margin: 0 0 1rem 0;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    background: #f2f7ea;
+    border: 2px solid #cfe3b6;
+}
+
+.status-label {
+    font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #426229;
+}
+
+#attempts-counter {
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-weight: 700;
+    color: #1f3510;
 }
 
 #game-board {
