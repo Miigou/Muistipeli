@@ -1,8 +1,35 @@
 import { createCardElement, flipCard } from './card.js';
 
-const allCards = [
-    '🍎', '🍐', '🍒', '🍉', '🍇', '🍓', '🍌', '🍍', '🥝', '🥥', '🍑', '🍈', '🍋', '🍊', '🍏', '🍅'
-];
+const cardSets = {
+    fruits: [
+        { id: 'apple', label: '🍎', color: 'default' },
+        { id: 'pear', label: '🍐', color: 'default' },
+        { id: 'cherry', label: '🍒', color: 'default' },
+        { id: 'watermelon', label: '🍉', color: 'default' },
+        { id: 'grapes', label: '🍇', color: 'default' },
+        { id: 'strawberry', label: '🍓', color: 'default' },
+        { id: 'banana', label: '🍌', color: 'default' },
+        { id: 'pineapple', label: '🍍', color: 'default' },
+        { id: 'kiwi', label: '🥝', color: 'default' },
+        { id: 'coconut', label: '🥥', color: 'default' },
+        { id: 'peach', label: '🍑', color: 'default' },
+        { id: 'melon', label: '🍈', color: 'default' },
+        { id: 'lemon', label: '🍋', color: 'default' },
+        { id: 'orange', label: '🍊', color: 'default' },
+        { id: 'greenApple', label: '🍏', color: 'default' },
+        { id: 'tomato', label: '🍅', color: 'default' }
+    ],
+    poker: [
+        { id: 'spade_solid', label: '♠', color: 'black' },
+        { id: 'spade_outline', label: '♤', color: 'black' },
+        { id: 'club_solid', label: '♣', color: 'black' },
+        { id: 'club_outline', label: '♧', color: 'black' },
+        { id: 'heart_solid', label: '♥', color: 'red' },
+        { id: 'heart_outline', label: '♡', color: 'red' },
+        { id: 'diamond_solid', label: '♦', color: 'red' },
+        { id: 'diamond_outline', label: '♢', color: 'red' }
+    ]
+};
 const gameBoard = document.getElementById('game-board');
 let firstCard = null;
 let secondCard = null;
@@ -35,13 +62,20 @@ export function clearBoard() {
     updateAttemptsDisplay();
 }
 
-export function createBoard(cardCount, onWin) {
+export function createBoard(cardCount, onWin, cardTheme = 'fruits') {
     clearBoard();
     totalPairs = cardCount / 2;
     onGameWon = onWin || null;
+
+    const selectedSet = cardSets[cardTheme] || cardSets.fruits;
+    if (totalPairs > selectedSet.length) {
+        alert(`Valitussa korttityylissa on enintaan ${selectedSet.length * 2} korttia.`);
+        return;
+    }
+
     const columns = Math.min(Math.ceil(Math.sqrt(cardCount)), 6);
     gameBoard.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-    const selectedCards = allCards.slice(0, cardCount / 2);
+    const selectedCards = selectedSet.slice(0, totalPairs);
     const cards = [...selectedCards, ...selectedCards];
     shuffle(cards);
     cards.forEach(card => {

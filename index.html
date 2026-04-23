@@ -8,7 +8,17 @@
 </head>
 <body>
     <h1>Muistipeli</h1>
-    <button id="restart-btn">Aloita alusta</button>
+    <div class="controls">
+        <button id="restart-btn">Aloita alusta</button>
+        <button id="theme-toggle-btn" type="button" aria-pressed="false">Tumma teema</button>
+        <label class="control-group" for="card-theme-select">
+            Korttityyli
+            <select id="card-theme-select">
+                <option value="fruits">Hedelmät</option>
+                <option value="poker">Pokerikortit</option>
+            </select>
+        </label>
+    </div>
     <div class="game-status" aria-live="polite">
         <span class="status-label">Yritykset</span>
         <span id="attempts-counter" class="status-value">0</span>
